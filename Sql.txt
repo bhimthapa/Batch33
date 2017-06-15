@@ -1,0 +1,24 @@
+create database Batch33
+go
+use Batch33
+go
+create table Customer
+(
+CustomerId int identity(1,1) primary key,
+FirstName varchar(50),
+LastName varchar(50),
+Email varchar(50),
+Phone varchar(12)
+
+)
+go
+insert into Customer values('Mike3','Smith3','abc3@mail.com','6778889098')
+insert into Customer values('John','King','abc1@mail.com','6778889098')
+insert into Customer values('Mike1','Smith2','abc2@mail.com','6778889098')
+insert into Customer values('Mike2','Smith2','abc3@mail.com','6778889098')
+go
+create procedure GetCustomers
+as
+begin
+select * from Customer
+end
