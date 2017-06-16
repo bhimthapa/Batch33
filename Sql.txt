@@ -17,20 +17,51 @@ insert into Customer values('John','King','abc1@mail.com','6778889098')
 insert into Customer values('Mike1','Smith2','abc2@mail.com','6778889098')
 insert into Customer values('Mike2','Smith2','abc3@mail.com','6778889098')
 go
-create procedure GetCustomers
-as
+
+
+create procedure AddNewCustomer
+@FirstName varchar(50),
+@LastName varchar(50),
+@Email varchar(50),
+@Phone varchar(12)
+as 
 begin
-select * from Customer
+insert into Customer values(@FirstName,@LastName,@Email,@Phone)
 end
 
-create procudere AddCustomers(
 
-@firstName varchar(50),
-@lastName varchar(50),
-@email varchar(50),
-@phone varchar(12)
-)
-AS  
-BEGIN  
-insert into Customer (FirstName, LastName, Email, Phone) values( @firstName, @lastName, @email, @phone)  
-END 
+exec  AddNewCustomer 'TestFN','TestLN','test@mail.com','6666666666'
+
+
+create procedure UpdateNewCustomer
+@FirstName varchar(50),
+@LastName varchar(50),
+@Email varchar(50),
+@Phone varchar(12),
+@Id int
+as 
+begin
+update Customer set FirstName=@FirstName,LastName=@LastName,Email=@Email,Phone=@Phone
+where CustomerId=@Id
+end
+
+
+exec  UpdateNewCustomer 'UpdatedFN','TestLN','test@mail.com','6666666666',14
+
+create procedure DeleteCustomer
+@Id int
+as 
+begin
+DELETE FROM Customer where CustomerId=@Id
+end
+
+
+exec  DeleteCustomer 14
+
+
+
+
+
+
+
+
