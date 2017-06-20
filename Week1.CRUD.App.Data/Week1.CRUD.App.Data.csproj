@@ -41,6 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerDataAcess.cs" />
+    <Compile Include="Interface\ICRUD.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CUstomerBase.cs" />
+    <Compile Include="Models\DataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using Week1.CRUD.App.Data;
+using Week1.CRUD.App.Data.Interface;
+using Week1.CRUD.App.Data.Models;
 
 namespace Week1.CRUD.App.Console_App
 
@@ -16,7 +18,7 @@ namespace Week1.CRUD.App.Console_App
         {
             while (true)
             {
-
+                
                 Console.WriteLine("1 for Display All");
                 Console.WriteLine("2 for Add New Record");
                 Console.WriteLine("3 for Update");
@@ -25,13 +27,15 @@ namespace Week1.CRUD.App.Console_App
                 Console.WriteLine("6 for Exit");
                 Console.WriteLine("Enter your Choice....");
                 string choice = Console.ReadLine();
-                CustomerDataAcess cusData = new CustomerDataAcess();
+               // CustomerDataAcess cusData = new CustomerDataAcess();
+                ICRUD dataaccess = new DataAcess();
+                Customer cusOBj = new Customer();
                 switch (choice)
                 {
                     case "1":
 
 
-                        SqlDataReader rd = cusData.GetCustomerData();
+                        SqlDataReader rd = dataaccess.ReadAll();
                         while (rd.Read())
                         {
                             Console.WriteLine("**********************************************");
@@ -55,7 +59,12 @@ namespace Week1.CRUD.App.Console_App
                         string em = Console.ReadLine();
                         Console.WriteLine("Enter Phone Number");
                         string ph = Console.ReadLine();
-                        cusData.AddNewCustomer(fn, ln, em, ph);
+                     
+                        cusOBj.FirstName = fn;
+                        cusOBj.LastName = ln;
+                        cusOBj.Email = em;
+                        cusOBj.Phone = ph;
+                        dataaccess.Add(cusOBj);
                         break;
                     case "3":
                         Console.WriteLine("Enter Id to Update");
@@ -68,15 +77,34 @@ namespace Week1.CRUD.App.Console_App
                         string uem = Console.ReadLine();
                         Console.WriteLine("Enter Phone Number");
                         string uph = Console.ReadLine();
-                        cusData.UpdateNewCustomer(ufn, uln, uem, uph, Convert.ToInt32(id));
+                       // Customer cusOBj = new Customer();
+                        cusOBj.FirstName = ufn;
+                        cusOBj.LastName = uln;
+                        cusOBj.Email = uem;
+                        cusOBj.Phone = uph;
+                        cusOBj.Id = Convert.ToInt32(id);
+                        dataaccess.Upadate(cusOBj);
+
+                        
                         break;
                     case "4":
                         Console.WriteLine("Enter Id to Delete");
                         string did = Console.ReadLine();
-                        cusData.DeleteCustomer(Convert.ToInt32(did));
+                        cusOBj.Id = Convert.ToInt32(did);
+                        dataaccess.Delete(cusOBj);
                         break;
                     case "5":
-                        Console.WriteLine("Case 5 selected");
+                        Console.WriteLine("Enter Id to Find");
+                        string did1 = Console.ReadLine();
+                        cusOBj.Id = Convert.ToInt32(did1);
+                       Customer obj= dataaccess.Find(cusOBj);
+                        Console.WriteLine("**********************************************");
+                        //Console.WriteLine("Id :{0}", obj.Id);
+                        Console.WriteLine("First Name :{0}", obj.FirstName);
+                        Console.WriteLine("Last Name :{0}", obj.LastName);
+                        Console.WriteLine("Email :{0}", obj.Email);
+                        Console.WriteLine("Phone Number :{0}", obj.Phone);
+                        Console.WriteLine("**********************************************");
                         break;
                     case "6":
                         Environment.Exit(0);

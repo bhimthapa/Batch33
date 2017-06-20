@@ -5,18 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using Week1.CRUD.App.Data.Models;
 //Step 1 : Import data access libraries
 
 
 namespace Week1.CRUD.App.Data
 {
-    public class CustomerDataAcess
+    public class CustomerDataAcess: CustomerBase
     {
         //Step 2 : Create a method to get the data from database table
         public SqlDataReader GetCustomerData()
         {
             // Step  3: Configure connection string
-            SqlConnection conn = new SqlConnection("Data Source=.;Initial Catalog=Batch33;Integrated Security=True");
+            SqlConnection conn = new SqlConnection(base.ConnectionString());
             //Step 4: Invoke storedprocedure
             SqlCommand cmd = new SqlCommand("GetCustomers", conn);
             
@@ -30,7 +31,7 @@ namespace Week1.CRUD.App.Data
         public void AddNewCustomer(string fn,string ln,string email, string phone)
         {
             // Step  3: Configure connection string
-            SqlConnection conn = new SqlConnection("Data Source=.;Initial Catalog=Batch33;Integrated Security=True");
+            SqlConnection conn = new SqlConnection(base.ConnectionString());
             //Step 4: Invoke storedprocedure
             SqlCommand cmd = new SqlCommand("AddNewCustomer", conn);
 
@@ -50,7 +51,7 @@ namespace Week1.CRUD.App.Data
         public void UpdateNewCustomer(string fn, string ln, string email, string phone, int id)
         {
             // Step  3: Configure connection string
-            SqlConnection conn = new SqlConnection("Data Source=.;Initial Catalog=Batch33;Integrated Security=True");
+            SqlConnection conn = new SqlConnection(base.ConnectionString());
             //Step 4: Invoke storedprocedure
             SqlCommand cmd = new SqlCommand("UpdateNewCustomer", conn);
 
